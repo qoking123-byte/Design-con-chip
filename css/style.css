@@ -1,0 +1,229 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+/* =====================================================
+   몬드리안 (Piet Mondrian) & TUKorea 하이브리드 디자인 토큰
+   - 기본 원색: Mondrian Red, Blue, Yellow, Stark Black, Pure White
+   - 기하학적 그리드 분할과 직각 교차의 미학
+   - 흑백(Monochrome) 캠퍼스 & 연구 현장 사진의 유기적 융합
+===================================================== */
+:root {
+  --mondrian-red: #d90429;
+  --mondrian-blue: #003876;       /* 한국공학대 시그니처 네이비 블루 */
+  --mondrian-blue-vivid: #0056b3;
+  --mondrian-yellow: #f6bd60;
+  --mondrian-yellow-vivid: #f4a261;
+  --mondrian-black: #111827;
+  --mondrian-border-color: #111827;
+  --mondrian-white: #ffffff;
+  --mondrian-gray-bg: #f8fafc;
+  --mondrian-card-bg: #ffffff;
+}
+
+.dark {
+  --mondrian-black: #f8fafc;
+  --mondrian-border-color: #475569;
+  --mondrian-white: #0f172a;
+  --mondrian-gray-bg: #0b1120;
+  --mondrian-card-bg: #1e293b;
+  --mondrian-red: #ef233c;
+  --mondrian-blue: #2563eb;
+  --mondrian-yellow: #ffb703;
+}
+
+* {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 몬드리안 시그니처 그리드 라인 */
+.mondrian-border {
+  border-color: var(--mondrian-border-color) !important;
+}
+
+.mondrian-grid-container {
+  display: grid;
+  background-color: var(--mondrian-border-color);
+  gap: 3px; /* 몬드리안 특유의 두꺼운 검은색 그리드 선 효과 */
+  padding: 3px;
+}
+
+/* 흑백 사진(B&W Campus Photography) 전용 필터 & 효과 */
+.bw-photo {
+  filter: grayscale(100%) contrast(120%) brightness(95%);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  object-fit: cover;
+}
+
+.bw-photo-tint {
+  filter: grayscale(100%) contrast(125%) brightness(90%);
+  mix-blend-mode: multiply;
+}
+
+.bw-photo-container {
+  position: relative;
+  overflow: hidden;
+  background-color: #111827;
+}
+
+.bw-photo-container:hover .bw-photo {
+  transform: scale(1.04);
+  filter: grayscale(85%) contrast(115%) brightness(100%);
+}
+
+.dark .bw-photo-container:hover .bw-photo {
+  filter: grayscale(70%) contrast(120%) brightness(105%);
+}
+
+/* 몬드리안 원색 블록 클래스 */
+.m-block-red {
+  background-color: var(--mondrian-red);
+  color: #ffffff;
+}
+.m-block-blue {
+  background-color: var(--mondrian-blue);
+  color: #ffffff;
+}
+.m-block-yellow {
+  background-color: var(--mondrian-yellow);
+  color: #111827;
+}
+.m-block-white {
+  background-color: var(--mondrian-card-bg);
+  color: inherit;
+}
+.m-block-black {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+}
+
+/* 몬드리안 스타일 연구 카드 */
+.mondrian-card {
+  position: relative;
+  background: var(--mondrian-card-bg);
+  border: 3px solid var(--mondrian-border-color);
+  box-shadow: 6px 6px 0px var(--mondrian-border-color);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mondrian-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 10px 10px 0px var(--mondrian-border-color);
+}
+
+/* 몬드리안 TRL 단계별 기하학 바 */
+.mondrian-trl-step {
+  height: 8px;
+  flex: 1;
+  background-color: #e2e8f0;
+  border-right: 1px solid var(--mondrian-border-color);
+  transition: background-color 0.2s ease;
+}
+.dark .mondrian-trl-step {
+  background-color: #334155;
+  border-right: 1px solid #64748b;
+}
+
+.mondrian-trl-step.active-red {
+  background-color: var(--mondrian-red);
+}
+.mondrian-trl-step.active-yellow {
+  background-color: var(--mondrian-yellow);
+}
+.mondrian-trl-step.active-blue {
+  background-color: var(--mondrian-blue);
+}
+
+/* 몬드리안 기하학적 뱃지 */
+.m-badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--mondrian-border-color);
+}
+
+/* 스크롤바 */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mondrian-border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mondrian-red);
+}
+
+/* 모달 애니메이션 */
+.modal-overlay {
+  transition: opacity 0.25s ease-out;
+}
+.modal-content {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease-out;
+}
+.modal-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-hidden .modal-content {
+  transform: scale(0.96) translateY(10px);
+}
+
+/* 토스트 알림 (몬드리안 박스 스타일) */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border: 3px solid #111827;
+  box-shadow: 5px 5px 0px #111827;
+  font-size: 0.925rem;
+  font-weight: 700;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 인쇄용 스타일 */
+@media print {
+  header, footer, #filter-section, #analytics-section, #toast-container, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .mondrian-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 2px solid #000 !important;
+    margin-bottom: 20px;
+  }
+}

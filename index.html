@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한국공학대학교 연구성과 포털 | TUKorea Mondrian Research Nexus</title>
+  <meta name="description" content="한국공학대학교(TUKorea) 산학협력단 최신 연구 성과, 논문, 특허, 기술이전 포트폴리오 (몬드리안 디자인 & 캠퍼스 흑백 아카이브 에디션)">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            mondrian: {
+              red: '#d90429',
+              blue: '#003876',
+              yellow: '#f6bd60',
+              black: '#111827',
+              gray: '#f8fafc'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Mondrian & B&W Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#f8fafc] text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+
+  <!-- ==================== 상단 몬드리안 시그니처 띠 배너 ==================== -->
+  <aside class="bg-black text-white text-xs py-2 px-4 border-b-2 border-black" aria-label="몬드리안 헤더 띠">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2 truncate">
+        <!-- 몬드리안 3색 큐브 뱃지 -->
+        <div class="flex items-center h-4 w-10 border border-white overflow-hidden flex-shrink-0">
+          <span class="w-1/3 h-full bg-[#d90429]"></span>
+          <span class="w-1/3 h-full bg-[#f6bd60]"></span>
+          <span class="w-1/3 h-full bg-[#003876]"></span>
+        </div>
+        <span class="truncate font-medium text-[11px] sm:text-xs">
+          🏆 <strong>한국공학대학교 컴퓨터공학부</strong> 나보균 교수팀, 세계 3대 AI 학회 <strong>NeurIPS 2026</strong> 논문 정식 채택
+        </span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-slate-300 font-mono text-[11px] flex-shrink-0">
+        <span>TUKOREA 산학협력단</span>
+        <span>4,500+ FAMILY COMPANIES</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== 메인 네비게이션 헤더 ==================== -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur border-b-4 border-slate-900 dark:border-slate-300 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+      
+      <!-- 대학 로고 & 몬드리안 엠블럼 -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 border-3 border-black bg-white flex flex-col justify-between p-1 shadow-[3px_3px_0px_#111827] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
+          <div class="flex h-1/2 gap-1">
+            <span class="w-1/2 bg-[#d90429]"></span>
+            <span class="w-1/2 bg-white border border-black"></span>
+          </div>
+          <div class="flex h-1/2 gap-1">
+            <span class="w-1/2 bg-[#003876]"></span>
+            <span class="w-1/2 bg-[#f6bd60]"></span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-lg font-black tracking-tighter text-slate-900 dark:text-white uppercase">한국공학대학교</span>
+            <span class="m-badge px-1.5 py-0.2 text-[10px] bg-black text-white">TUK</span>
+          </div>
+          <p class="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400">RESEARCH NEXUS · 산학융합 포털</p>
+        </div>
+      </a>
+
+      <!-- 데스크톱 메뉴 링크 -->
+      <nav class="hidden lg:flex items-center gap-8 text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
+        <a href="#hero-mondrian" class="hover:text-red-600 transition-colors">캠퍼스 캔버스</a>
+        <a href="#campus-gallery" class="hover:text-red-600 transition-colors">연구 현장 아카이브</a>
+        <a href="#icc-section" class="hover:text-blue-600 transition-colors">5T 특화센터 (ICC)</a>
+        <a href="#research-section" class="hover:text-amber-500 transition-colors">연구성과 탐색</a>
+        <a href="#analytics-section" class="hover:text-red-600 transition-colors">R&D 분석 지표</a>
+      </nav>
+
+      <!-- 우측 컨트롤 버튼들 -->
+      <div class="flex items-center gap-2">
+        
+        <!-- 북마크 모아보기 버튼 -->
+        <button onclick="openBookmarksModal()" class="relative p-2 border-2 border-slate-900 dark:border-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shadow-[2px_2px_0px_#111827]" title="보관한 연구 성과">
+          <i data-lucide="bookmark" class="w-4 h-4 text-slate-900 dark:text-white"></i>
+          <span id="bookmark-counter-badge" class="hidden absolute -top-2 -right-2 w-5 h-5 bg-red-600 text-white text-[10px] font-black border border-black flex items-center justify-center">
+            0
+          </span>
+        </button>
+
+        <!-- 다크/라이트 모드 토글 -->
+        <button id="theme-toggle-btn" class="p-2 border-2 border-slate-900 dark:border-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shadow-[2px_2px_0px_#111827]" title="테마 변경">
+          <i id="icon-moon" data-lucide="moon" class="w-4 h-4 text-slate-900 dark:text-white"></i>
+          <i id="icon-sun" data-lucide="sun" class="w-4 h-4 text-slate-900 dark:text-white hidden"></i>
+        </button>
+
+        <!-- 기술이전 문의 CTA -->
+        <button onclick="openConsultationModal()" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 border-2 border-black bg-red-600 hover:bg-red-700 text-white text-xs font-black shadow-[3px_3px_0px_#111827] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all">
+          <i data-lucide="handshake" class="w-3.5 h-3.5"></i>
+          <span>기술이전 문의</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== 몬드리안 시그니처 히어로 캔버스 (HERO SECTION) ==================== -->
+  <section id="hero-mondrian" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+    
+    <!-- 몬드리안 콤포지션 그리드 컨테이너 (두꺼운 검은 선으로 구획된 비대칭 분할) -->
+    <div class="mondrian-grid-container border-4 border-slate-900 dark:border-slate-300 shadow-[8px_8px_0px_#111827] dark:shadow-[8px_8px_0px_#cbd5e1] grid-cols-1 lg:grid-cols-12 min-h-[520px]">
+      
+      <!-- 블록 1 (좌측 5열): 흑백 처리된 한국공학대 캠퍼스 전경 & TIP 본부 사진 -->
+      <div class="lg:col-span-5 bg-white dark:bg-slate-900 bw-photo-container relative flex flex-col justify-between p-6 overflow-hidden min-h-[300px]">
+        <!-- 흑백 캠퍼스 사진 (건축적 미학) -->
+        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80" 
+             alt="한국공학대학교 캠퍼스 전경" 
+             class="bw-photo absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+
+        <!-- 상단 몬드리안 태그 -->
+        <div class="relative z-10 flex items-center justify-between">
+          <span class="m-badge px-2.5 py-1 text-xs bg-white text-black font-mono">
+            CAMPUS VIEW · 15073
+          </span>
+          <span class="m-badge px-2.5 py-1 text-xs bg-[#d90429] text-white font-mono">
+            TUKOREA
+          </span>
+        </div>
+
+        <!-- 하단 텍스트 레이블 -->
+        <div class="relative z-10 text-white">
+          <p class="text-xs font-mono tracking-widest uppercase text-slate-300 mb-1">TECHNO INNOVATION PAVILION</p>
+          <h2 class="text-xl sm:text-2xl font-black leading-tight drop-shadow-md">
+            산학융합본부 & TIP<br>
+            엔지니어링 클러스터
+          </h2>
+          <p class="text-[11px] text-slate-300 mt-2 font-medium">
+            반월·시화 국가산업단지 중심에 위치한 대한민국 대표 산학일체형 혁신 캠퍼스
+          </p>
+        </div>
+      </div>
+
+      <!-- 블록 2 (중앙 4열): 몬드리안 레드 메인 타이틀 & 검색 영역 -->
+      <div class="lg:col-span-4 flex flex-col gap-[3px]">
+        
+        <!-- 상단: 몬드리안 레드 헤드라인 박스 -->
+        <div class="m-block-red p-6 flex flex-col justify-between flex-1">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 border-2 border-white text-[10px] font-black uppercase tracking-wider mb-3 bg-black text-white">
+              <span class="w-2 h-2 bg-[#f6bd60]"></span>
+              MONDRIAN R&D COMPOSITION
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black text-white leading-tight uppercase tracking-tight">
+              산업과 미래를<br>
+              연결하는 공학기술
+            </h1>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed font-medium mt-3">
+            인공지능(AI), 차세대 반도체, 3D 바이오프린팅, 스마트 모빌리티의 세계적 연구 성과를 기하학적 아카이브로 공개합니다.
+          </p>
+        </div>
+
+        <!-- 하단: 메인 검색창 블록 (화이트 캔버스) -->
+        <div class="bg-white dark:bg-slate-900 p-5 flex flex-col justify-center">
+          <div class="border-2 border-slate-900 dark:border-slate-300 p-1 flex items-center gap-2 bg-slate-50 dark:bg-slate-800">
+            <i data-lucide="search" class="w-4 h-4 ml-2 text-slate-500 flex-shrink-0"></i>
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="연구 주제, 교수명(나보균, 남옥현, 유동길)..." 
+              class="w-full bg-transparent border-0 text-xs sm:text-sm focus:outline-none py-1.5 text-slate-900 dark:text-white"
+            >
+            <button id="search-clear-btn" class="hidden p-1 text-slate-400 hover:text-black dark:hover:text-white">
+              <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="document.getElementById('research-section').scrollIntoView({ behavior: 'smooth' })" class="px-3 py-1.5 bg-black text-white dark:bg-white dark:text-black text-xs font-black flex-shrink-0 hover:bg-[#003876] transition-colors">
+              검색
+            </button>
+          </div>
+
+          <!-- 인기 키워드 태그 -->
+          <div class="flex items-center gap-1.5 mt-3 text-[11px] font-mono flex-wrap">
+            <span class="font-bold text-slate-400">TAG:</span>
+            <button onclick="quickSearch('NeurIPS')" class="hover:underline font-bold text-red-600">#NeurIPS2026</button>
+            <button onclick="quickSearch('다이아몬드')" class="hover:underline font-bold text-blue-700 dark:text-blue-400">#다이아몬드반도체</button>
+            <button onclick="quickSearch('바이오프린팅')" class="hover:underline font-bold text-amber-600">#3D바이오</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 블록 3 (우측 3열): 몬드리안 옐로우 & 클린룸 흑백 사진 분할 -->
+      <div class="lg:col-span-3 flex flex-col gap-[3px]">
+        
+        <!-- 상단 옐로우 통계 블록 -->
+        <div class="m-block-yellow p-5 flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-black text-white">KEY STATS</span>
+            <span class="text-xs font-mono font-black">2026</span>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <span class="text-[10px] font-bold text-slate-800 uppercase block">가족회사 네트워크</span>
+              <span id="stat-family" class="text-2xl font-black text-black">4,500+</span>
+            </div>
+            <div class="border-t border-black/20 pt-2 flex justify-between">
+              <div>
+                <span class="text-[10px] font-bold text-slate-800 block">등록 특허</span>
+                <span id="stat-patents" class="text-lg font-black text-black">1,280+</span>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold text-slate-800 block">기술이전</span>
+                <span id="stat-transfer" class="text-lg font-black text-black">128억원+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 하단: 흑백 클린룸 연구원 사진 & 블루 뱃지 -->
+        <div class="bg-white dark:bg-slate-900 bw-photo-container relative flex-1 min-h-[190px] overflow-hidden p-4 flex flex-col justify-end">
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" 
+               alt="나노반도체 클린룸 연구 현장" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/50"></div>
+          
+          <div class="relative z-10">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-[#003876] text-white font-mono mb-1">
+              CLEANROOM CLASS 1000
+            </span>
+            <h4 class="text-xs font-black text-white">
+              나노반도체융합센터 클린룸
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ==================== 한국공학대 연구 현장 흑백 아카이브 (CAMPUS & LAB GALLERY) ==================== -->
+  <section id="campus-gallery" class="py-12 bg-white dark:bg-[#0e1626] border-y-4 border-slate-900 dark:border-slate-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-3 h-3 bg-[#d90429]"></div>
+            <span class="text-xs font-mono font-black uppercase tracking-widest text-slate-500">MONOCHROME RESEARCH ARCHIVE</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
+            한국공학대학교 연구 현장 & 거점 갤러리
+          </h2>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 md:mt-0 font-medium max-w-md">
+          이론에 머무르지 않고 제조 산업 현장에서 살아 숨 쉬는 한국공학대학교의 첨단 인프라와 연구실을 흑백 아카이브로 조명합니다.
+        </p>
+      </div>
+
+      <!-- 몬드리안 비대칭 사진 그리드 (흑백 처리된 현장 사진 5점) -->
+      <div class="mondrian-grid-container grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-[3px] border-3 border-slate-900 dark:border-slate-300">
+        
+        <!-- 갤러리 1 (4열): 산학융합본부 & 종합관 전경 -->
+        <div class="lg:col-span-4 bg-slate-900 bw-photo-container relative min-h-[260px] p-5 flex flex-col justify-between group">
+          <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80" 
+               alt="산학융합본부 전경" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+
+          <div class="relative z-10 flex justify-between items-start">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-white text-black font-mono">SITE 01</span>
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-[#003876] text-white">산학일체</span>
+          </div>
+
+          <div class="relative z-10 text-white">
+            <h3 class="text-sm font-black drop-shadow">제1공학관 & 산학융합본부</h3>
+            <p class="text-[11px] text-slate-300 mt-0.5">기업 연구소와 대학 연구실이 공존하는 현장 혁신 공간</p>
+          </div>
+        </div>
+
+        <!-- 갤러리 2 (4열): AX 제조혁신 오픈랩 (산업용 로봇) -->
+        <div class="lg:col-span-4 bg-slate-900 bw-photo-container relative min-h-[260px] p-5 flex flex-col justify-between group">
+          <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80" 
+               alt="AX 오픈랩 산업용 로봇" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+
+          <div class="relative z-10 flex justify-between items-start">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-white text-black font-mono">SITE 02</span>
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-[#d90429] text-white">AX 오픈랩</span>
+          </div>
+
+          <div class="relative z-10 text-white">
+            <h3 class="text-sm font-black drop-shadow">스마트제조 AX 실증 오픈랩</h3>
+            <p class="text-[11px] text-slate-300 mt-0.5">시각-촉각 AI 기반 산업용 협동로봇 조립 및 NPU 가속 실증</p>
+          </div>
+        </div>
+
+        <!-- 갤러리 3 (4열): 3D 바이오프린팅 연구실 -->
+        <div class="lg:col-span-4 bg-slate-900 bw-photo-container relative min-h-[260px] p-5 flex flex-col justify-between group">
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80" 
+               alt="3D 바이오프린팅 연구소" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+
+          <div class="relative z-10 flex justify-between items-start">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-white text-black font-mono">SITE 03</span>
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-[#f6bd60] text-black">바이오메디컬</span>
+          </div>
+
+          <div class="relative z-10 text-white">
+            <h3 class="text-sm font-black drop-shadow">3D 바이오프린팅 & 인체 모사체 랩</h3>
+            <p class="text-[11px] text-slate-300 mt-0.5">혈관화 피부 모델 및 골재생 임플란트 바이오프린팅</p>
+          </div>
+        </div>
+
+        <!-- 갤러리 4 (6열): 자율주행 모빌리티 트랙 -->
+        <div class="lg:col-span-6 bg-slate-900 bw-photo-container relative min-h-[220px] p-5 flex flex-col justify-between group">
+          <img src="https://images.unsplash.com/photo-1558441719-74e50882ef13?auto=format&fit=crop&w=800&q=80" 
+               alt="자율주행 모빌리티 시험" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+
+          <div class="relative z-10 flex justify-between items-start">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-white text-black font-mono">SITE 04</span>
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-black text-white">스마트 모빌리티</span>
+          </div>
+
+          <div class="relative z-10 text-white">
+            <h3 class="text-sm font-black drop-shadow">배곧 자율주행 시범지구 실증 시험동</h3>
+            <p class="text-[11px] text-slate-300 mt-0.5">4D 이미징 레이더-라이다 퓨전 기반 악천후 자율주행 셔틀 검증</p>
+          </div>
+        </div>
+
+        <!-- 갤러리 5 (6열): 차세대 나노반도체 장비 클러스터 -->
+        <div class="lg:col-span-6 bg-slate-900 bw-photo-container relative min-h-[220px] p-5 flex flex-col justify-between group">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" 
+               alt="나노반도체 플랫폼" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+
+          <div class="relative z-10 flex justify-between items-start">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-white text-black font-mono">SITE 05</span>
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-[#003876] text-white">첨단 패키징</span>
+          </div>
+
+          <div class="relative z-10 text-white">
+            <h3 class="text-sm font-black drop-shadow">초격차 반도체 패키징 및 신뢰성 평가 센터</h3>
+            <p class="text-[11px] text-slate-300 mt-0.5">산업통상자원부 지정 120억 규모 차세대 반도체 후공정 R&D 거점</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 5T 특화연구센터 (ICC) 섹션 ==================== -->
+  <section id="icc-section" class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-3 h-3 bg-[#003876]"></div>
+            <span class="text-xs font-mono font-black uppercase tracking-widest text-slate-500">5T ICC DIRECTORY</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
+            5대 미래첨단 특화센터 (5T ICC)
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 md:mt-0 max-w-md font-medium">
+          각 센터는 흑백 연구실 실증 인프라와 산업체 패밀리 네트워크를 연계하여 즉시 사업화 가능한 원천기술을 확보하고 있습니다.
+        </p>
+      </div>
+
+      <!-- 5T 카드 컨테이너 (몬드리안 스타일) -->
+      <div id="icc-cards-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <!-- JS로 동적 렌더링 -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 연구성과 아카이브 탐색 섹션 (MAIN ARCHIVE) ==================== -->
+  <section id="research-section" class="py-16 bg-white dark:bg-[#0e1626] border-y-4 border-slate-900 dark:border-slate-300 flex-1">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-3 h-3 bg-[#f6bd60]"></div>
+            <span class="text-xs font-mono font-black uppercase tracking-widest text-slate-500">RESEARCH ARCHIVE EXPLORER</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
+            연구성과 데이터베이스
+          </h2>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono text-slate-500">
+            TOTAL: <strong id="results-count-badge" class="text-red-600 dark:text-amber-400 font-black text-sm">0건</strong>
+          </span>
+          <button id="export-csv-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-slate-900 dark:border-slate-300 bg-slate-50 dark:bg-slate-800 text-xs font-black shadow-[2px_2px_0px_#111827] hover:bg-slate-100 transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            CSV 내보내기
+          </button>
+        </div>
+      </div>
+
+      <!-- 몬드리안 스타일 다차원 필터링 바 -->
+      <div id="filter-section" class="border-3 border-slate-900 dark:border-slate-300 p-5 bg-[#f8fafc] dark:bg-slate-900 mb-8 shadow-[5px_5px_0px_#111827]">
+        
+        <!-- 분야 카테고리 탭 (Mondrian Pill Blocks) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-4 border-b-2 border-slate-900 dark:border-slate-700 text-xs font-black uppercase scrollbar-none">
+          <button data-category="all" class="category-pill active px-4 py-2 border-2 border-slate-900 m-block-red text-white whitespace-nowrap shadow-[2px_2px_0px_#111827] transition-all">
+            전체 분야
+          </button>
+          <button data-category="ai" class="category-pill px-4 py-2 border-2 border-slate-900 bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 whitespace-nowrap transition-all">
+            ■ AI & 제조혁신(AX)
+          </button>
+          <button data-category="semiconductor" class="category-pill px-4 py-2 border-2 border-slate-900 bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 whitespace-nowrap transition-all">
+            ■ 차세대 반도체·패키징
+          </button>
+          <button data-category="bio" class="category-pill px-4 py-2 border-2 border-slate-900 bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 whitespace-nowrap transition-all">
+            ■ 바이오 & 3D프린팅
+          </button>
+          <button data-category="mobility" class="category-pill px-4 py-2 border-2 border-slate-900 bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 whitespace-nowrap transition-all">
+            ■ 스마트 모빌리티·로봇
+          </button>
+          <button data-category="energy" class="category-pill px-4 py-2 border-2 border-slate-900 bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 whitespace-nowrap transition-all">
+            ■ 탄소중립 & 에너지
+          </button>
+        </div>
+
+        <!-- 세부 필터 드롭다운 그리드 -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 items-center">
+          
+          <div>
+            <label for="filter-type" class="block text-[10px] font-mono font-black uppercase text-slate-500 mb-1">성과 유형</label>
+            <select id="filter-type" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 px-2.5 py-1.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none">
+              <option value="all">전체 성과</option>
+              <option value="paper">학술 논문 (SCI)</option>
+              <option value="patent">특허 등록/출원</option>
+              <option value="transfer">기술이전 계약</option>
+              <option value="grant">대형 국책과제</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="filter-year" class="block text-[10px] font-mono font-black uppercase text-slate-500 mb-1">발표 연도</label>
+            <select id="filter-year" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 px-2.5 py-1.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none">
+              <option value="all">전체 연도</option>
+              <option value="2026">2026년 (최신)</option>
+              <option value="2025">2025년</option>
+              <option value="2024">2024년</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="filter-trl" class="block text-[10px] font-mono font-black uppercase text-slate-500 mb-1">기술 성숙도 (TRL)</label>
+            <select id="filter-trl" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 px-2.5 py-1.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none">
+              <option value="all">전체 단계 (1~9)</option>
+              <option value="basic">기초 연구 (TRL 1~3)</option>
+              <option value="applied">파일럿 실증 (TRL 4~6)</option>
+              <option value="commercial">상용화 (TRL 7~9)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="sort-select" class="block text-[10px] font-mono font-black uppercase text-slate-500 mb-1">정렬 기준</label>
+            <select id="sort-select" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 px-2.5 py-1.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none">
+              <option value="latest">최신 등록순</option>
+              <option value="citations">영향력/피인용순</option>
+              <option value="trl">기술성숙도(TRL)순</option>
+            </select>
+          </div>
+
+          <div class="col-span-2 sm:col-span-4 lg:col-span-1 flex items-end justify-between lg:justify-end gap-2 pt-2 lg:pt-0">
+            <div class="flex items-center border-2 border-slate-900 dark:border-slate-700">
+              <button id="view-grid-btn" class="p-1.5 bg-slate-900 text-white dark:bg-white dark:text-slate-900" title="그리드 뷰">
+                <i data-lucide="layout-grid" class="w-4 h-4"></i>
+              </button>
+              <button id="view-list-btn" class="p-1.5 text-slate-500 hover:text-black dark:hover:text-white" title="리스트 뷰">
+                <i data-lucide="list" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <button id="reset-filters-btn" class="p-2 border-2 border-slate-900 dark:border-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-white" title="필터 리셋">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 연구성과 결과 그리드 / 리스트 -->
+      <div id="research-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS로 동적 렌더링 -->
+      </div>
+
+      <!-- 빈 결과 상태 -->
+      <div id="empty-state" class="hidden text-center py-20 border-3 border-dashed border-slate-900 dark:border-slate-700 p-8">
+        <i data-lucide="search-x" class="w-12 h-12 mx-auto text-slate-400 mb-3"></i>
+        <h3 class="text-base font-black text-slate-900 dark:text-white mb-1">검색 조건과 일치하는 연구 성과가 없습니다</h3>
+        <p class="text-xs text-slate-500 mb-4">선택한 필터나 검색어를 재조정해 보세요.</p>
+        <button onclick="resetAllFilters()" class="px-4 py-2 border-2 border-slate-900 bg-red-600 text-white text-xs font-black">
+          전체 성과 보기
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== R&D 분석 지표 대시보드 ==================== -->
+  <section id="analytics-section" class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="mb-10 text-center max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 border-2 border-slate-900 text-xs font-mono font-black uppercase tracking-wider mb-2 bg-white dark:bg-slate-800">
+          <span class="w-2 h-2 bg-[#d90429]"></span>
+          PERFORMANCE ANALYTICS
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
+          연구역량 및 지표 분석
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
+          한국공학대학교 연구진의 연도별 성과 성장세와 5대 첨단 특화 분야별 포트폴리오를 시각화합니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- 연도별 추이 복합 차트 -->
+        <div class="lg:col-span-2 mondrian-card p-6 flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b-2 border-slate-900 dark:border-slate-700">
+            <div>
+              <h3 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">연도별 연구 성과 추이 (2022 ~ 2026)</h3>
+              <p class="text-[11px] text-slate-500">국제 학술논문 게재수, 특허 등록 건수 및 기술이전 체결 건수</p>
+            </div>
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-red-600 text-white font-mono">
+              +28.5% 성과성장
+            </span>
+          </div>
+
+          <div class="relative h-72 w-full">
+            <canvas id="chart-annual"></canvas>
+          </div>
+        </div>
+
+        <!-- 분야별 점유율 도넛 차트 -->
+        <div class="mondrian-card p-6 flex flex-col justify-between">
+          <div class="mb-4 pb-3 border-b-2 border-slate-900 dark:border-slate-700">
+            <h3 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">5대 미래첨단 분야 점유율</h3>
+            <p class="text-[11px] text-slate-500">연구비 및 논문·특허 비중</p>
+          </div>
+
+          <div class="relative h-60 w-full flex items-center justify-center">
+            <canvas id="chart-fields"></canvas>
+          </div>
+
+          <div class="pt-3 border-t-2 border-slate-900 dark:border-slate-700 text-[10px] font-mono text-slate-500 text-center">
+            반도체 및 AI 제조혁신 분야가 전체의 54% 차지
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 산학협력 & 기술이전 몬드리안 배너 ==================== -->
+  <section class="py-12 bg-white dark:bg-[#0e1626] border-t-4 border-slate-900 dark:border-slate-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="mondrian-grid-container grid-cols-1 lg:grid-cols-12 border-4 border-slate-900 dark:border-slate-300 shadow-[8px_8px_0px_#111827]">
+        
+        <!-- 좌측 7열: 기술이전 정책 및 안내 -->
+        <div class="lg:col-span-7 bg-[#f8fafc] dark:bg-slate-900 p-8 flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 border-2 border-slate-900 text-[10px] font-black uppercase bg-[#f6bd60] text-black mb-3">
+              INDUSTRY-UNIVERSITY COOPERATION
+            </div>
+            
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase leading-tight mb-3">
+              대학의 특허 기술이<br>
+              기업의 신성장 동력이 됩니다
+            </h2>
+            
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium">
+              한국공학대학교 산학협력단은 특허청 인증 지식재산경영 우수기관으로서, 기업의 현장 애로기술 해결과 
+              신사업 창출을 위해 1:1 맞춤형 기술이전, 산학공동 R&D, 첨단 연구 공용장비 인프라를 지원합니다.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+              <div class="border-2 border-slate-900 dark:border-slate-700 p-3 bg-white dark:bg-slate-800">
+                <span class="text-[10px] font-mono font-bold text-red-600 block">01</span>
+                <h4 class="text-xs font-black">우수 특허 기술이전</h4>
+                <p class="text-[10px] text-slate-500 mt-0.5">선급료+경상기술료 유연 계약</p>
+              </div>
+
+              <div class="border-2 border-slate-900 dark:border-slate-700 p-3 bg-white dark:bg-slate-800">
+                <span class="text-[10px] font-mono font-bold text-blue-600 block">02</span>
+                <h4 class="text-xs font-black">산학공동 R&D</h4>
+                <p class="text-[10px] text-slate-500 mt-0.5">정부지원사업 매칭 과제</p>
+              </div>
+
+              <div class="border-2 border-slate-900 dark:border-slate-700 p-3 bg-white dark:bg-slate-800">
+                <span class="text-[10px] font-mono font-bold text-amber-500 block">03</span>
+                <h4 class="text-xs font-black">연구장비 공동활용</h4>
+                <p class="text-[10px] text-slate-500 mt-0.5">클린룸 및 3D프린터</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button onclick="openConsultationModal()" class="px-5 py-2.5 border-2 border-black bg-red-600 hover:bg-red-700 text-white text-xs font-black shadow-[3px_3px_0px_#111827] transition-all">
+              기술 매칭 및 상담 신청
+            </button>
+            <a href="https://iacf.tukorea.ac.kr" target="_blank" class="px-4 py-2.5 border-2 border-slate-900 dark:border-slate-300 bg-white dark:bg-slate-800 text-xs font-black hover:bg-slate-100 transition-colors">
+              산학협력단 공식 홈 →
+            </a>
+          </div>
+        </div>
+
+        <!-- 우측 5열: 흑백 산학융합 연구센터 사진 & 전담 창구 -->
+        <div class="lg:col-span-5 bg-slate-900 bw-photo-container relative p-8 flex flex-col justify-between text-white min-h-[300px]">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" 
+               alt="산학협력 전담 상담 연구팀" 
+               class="bw-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/60"></div>
+
+          <div class="relative z-10">
+            <span class="m-badge px-2 py-0.5 text-[10px] bg-white text-black font-mono mb-2">
+              CONTACT DESK
+            </span>
+            <h3 class="text-lg font-black leading-tight drop-shadow">산학협력 전담 창구</h3>
+            <p class="text-xs text-slate-300 mt-1">기업 맞춤형 연구진 매칭 및 기술 평가 상담</p>
+          </div>
+
+          <div class="relative z-10 space-y-2 text-xs font-mono">
+            <div class="p-2 border border-white/30 bg-black/50 flex justify-between">
+              <span>기술이전실</span>
+              <span class="font-bold">031-8041-0850~3</span>
+            </div>
+            <div class="p-2 border border-white/30 bg-black/50 flex justify-between">
+              <span>연구기획팀</span>
+              <span class="font-bold">031-8041-0860~2</span>
+            </div>
+            <div class="p-2 border border-white/30 bg-black/50 flex justify-between">
+              <span>가족회사ICC</span>
+              <span class="font-bold">031-8041-0870~4</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="bg-black text-slate-300 text-xs py-10 border-t-4 border-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b-2 border-slate-800">
+        
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="flex h-5 w-8 border border-white overflow-hidden">
+              <span class="w-1/3 h-full bg-[#d90429]"></span>
+              <span class="w-1/3 h-full bg-[#f6bd60]"></span>
+              <span class="w-1/3 h-full bg-[#003876]"></span>
+            </div>
+            <span class="text-sm font-black text-white uppercase tracking-wider">한국공학대학교 산학협력단</span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed max-w-md">
+            15073 경기도 시흥시 산기대학로 237 (정왕동 2121) 한국공학대학교 산학융합본부<br>
+            Tech University of Korea Industry-University Cooperation Foundation
+          </p>
+          <div class="flex gap-4 text-[11px] font-mono text-slate-500 mt-2">
+            <span>사업자등록번호: 134-82-08976</span>
+            <span>단장: 정두희 교수</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2 font-mono">5T ICC CENTERS</h4>
+          <ul class="space-y-1 text-slate-400 text-xs">
+            <li><a href="#research-section" onclick="filterByIccCategory('semiconductor')" class="hover:text-white">차세대 반도체 패키징</a></li>
+            <li><a href="#research-section" onclick="filterByIccCategory('ai')" class="hover:text-white">AX 제조혁신 오픈랩</a></li>
+            <li><a href="#research-section" onclick="filterByIccCategory('bio')" class="hover:text-white">3D 바이오프린팅 & 첨단바이오</a></li>
+            <li><a href="#research-section" onclick="filterByIccCategory('mobility')" class="hover:text-white">첨단 모빌리티 & 자율주행</a></li>
+            <li><a href="#research-section" onclick="filterByIccCategory('energy')" class="hover:text-white">탄소중립 & 폐배터리 리사이클링</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2 font-mono">LINKS</h4>
+          <ul class="space-y-1 text-slate-400 text-xs">
+            <li><a href="https://www.tukorea.ac.kr" target="_blank" class="hover:text-white">한국공학대 공식 홈 ↗</a></li>
+            <li><a href="https://iacf.tukorea.ac.kr" target="_blank" class="hover:text-white">산학협력단 홈페이지 ↗</a></li>
+            <li><a href="https://family.tukorea.ac.kr" target="_blank" class="hover:text-white">가족회사 종합정보망 ↗</a></li>
+            <li><a href="https://equip.tukorea.ac.kr" target="_blank" class="hover:text-white">공동실험실습관 장비예약 ↗</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-500 text-[11px] font-mono">
+        <p>© 2026 Tech University of Korea (TUKorea). Piet Mondrian Edition.</p>
+        <div class="flex gap-4 mt-2 sm:mt-0">
+          <a href="#" class="hover:underline">개인정보처리방침</a>
+          <a href="#" class="hover:underline">지식재산권 정책</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== 모달 레이어 (몬드리안 스타일) ==================== -->
+
+  <!-- 1. 성과 상세 모달 -->
+  <div id="detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-hidden modal-overlay bg-black/70 backdrop-blur-sm">
+    <div class="modal-content w-full max-w-3xl max-h-[90vh] border-4 border-slate-900 dark:border-slate-300 shadow-[10px_10px_0px_#111827] flex flex-col overflow-hidden bg-white dark:bg-slate-950">
+      <div class="px-5 py-3 border-b-2 border-slate-900 dark:border-slate-700 flex items-center justify-between bg-slate-100 dark:bg-slate-900">
+        <span class="text-xs font-black uppercase tracking-wider flex items-center gap-1.5 font-mono">
+          <span class="w-2.5 h-2.5 bg-[#d90429]"></span>
+          TUKOREA RESEARCH ARCHIVE ITEM
+        </span>
+        <button onclick="closeDetailModal()" class="p-1 border border-black hover:bg-black hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="detail-modal-body" class="p-6 overflow-y-auto flex-1">
+        <!-- JS 동적 생성 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 북마크 모달 -->
+  <div id="bookmarks-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-hidden modal-overlay bg-black/70 backdrop-blur-sm">
+    <div class="modal-content w-full max-w-xl max-h-[85vh] border-4 border-slate-900 dark:border-slate-300 shadow-[10px_10px_0px_#111827] flex flex-col overflow-hidden bg-white dark:bg-slate-950">
+      <div class="px-5 py-3 border-b-2 border-slate-900 dark:border-slate-700 flex items-center justify-between bg-slate-100 dark:bg-slate-900">
+        <h3 class="text-xs font-black uppercase font-mono tracking-wider">BOOKMARKED RESEARCH</h3>
+        <button onclick="closeBookmarksModal()" class="p-1 border border-black hover:bg-black hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="bookmarks-list-container" class="p-5 overflow-y-auto space-y-2 flex-1">
+        <!-- JS 동적 생성 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 기술이전 상담 모달 -->
+  <div id="consultation-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-hidden modal-overlay bg-black/70 backdrop-blur-sm">
+    <div class="modal-content w-full max-w-xl max-h-[90vh] border-4 border-slate-900 dark:border-slate-300 shadow-[10px_10px_0px_#111827] flex flex-col overflow-hidden bg-white dark:bg-slate-950">
+      <div class="px-5 py-3 border-b-2 border-slate-900 dark:border-slate-700 flex items-center justify-between bg-slate-100 dark:bg-slate-900">
+        <h3 class="text-xs font-black uppercase font-mono tracking-wider">산학협력 & 기술이전 상담 신청</h3>
+        <button onclick="closeConsultationModal()" class="p-1 border border-black hover:bg-black hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <form onsubmit="handleConsultationSubmit(event)" class="p-6 overflow-y-auto space-y-4 text-xs flex-1">
+        <div>
+          <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">관련 연구 과제</label>
+          <select id="consult-research-select" name="researchTarget" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs">
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">기업명 <span class="text-red-600">*</span></label>
+            <input type="text" name="companyName" required placeholder="(주)엔지니어링" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs">
+          </div>
+          <div>
+            <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">담당자 성명 <span class="text-red-600">*</span></label>
+            <input type="text" name="contactName" required placeholder="홍길동 수석" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">연락처 <span class="text-red-600">*</span></label>
+            <input type="tel" name="contactPhone" required placeholder="010-0000-0000" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs">
+          </div>
+          <div>
+            <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">이메일 <span class="text-red-600">*</span></label>
+            <input type="email" name="contactEmail" required placeholder="contact@company.com" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">문의 유형</label>
+          <select name="inquiryType" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs">
+            <option value="transfer">특허 및 기술이전 실시권 계약 문의</option>
+            <option value="joint_rd">산학 공동 R&D 프로젝트 추진</option>
+            <option value="facility">대학 연구실 및 클린룸 첨단장비 활용</option>
+            <option value="consulting">기업 현장 기술 애로사항 자문 지도</option>
+            <option value="family">한국공학대 유료 가족회사 가입 안내</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-black uppercase text-[10px] text-slate-500 mb-1">요청 내용</label>
+          <textarea name="inquiryContent" rows="3" placeholder="상담 희망 내용 및 기업의 필요 기술 조건을 간략히 입력해 주세요." class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-700 p-2 text-xs"></textarea>
+        </div>
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeConsultationModal()" class="px-4 py-2 border-2 border-slate-900 text-xs font-black">
+            취소
+          </button>
+          <button type="submit" class="px-5 py-2 border-2 border-black bg-red-600 text-white text-xs font-black">
+            상담 신청서 제출
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. 접수 완료 모달 -->
+  <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-hidden modal-overlay bg-black/70 backdrop-blur-sm">
+    <div class="modal-content w-full max-w-sm border-4 border-slate-900 dark:border-slate-300 shadow-[8px_8px_0px_#111827] p-6 text-center bg-white dark:bg-slate-950">
+      <div class="w-12 h-12 border-2 border-black bg-amber-300 text-black mx-auto flex items-center justify-center mb-3">
+        <i data-lucide="check" class="w-6 h-6 stroke-[3]"></i>
+      </div>
+      <h3 class="text-base font-black text-slate-900 dark:text-white mb-1">상담 신청이 정상 접수되었습니다</h3>
+      <p class="text-xs text-slate-500 mb-4 font-medium">담당 기술 매니저가 24시간 내 연락드립니다.</p>
+      <div class="border-2 border-black p-2 bg-slate-100 dark:bg-slate-800 mb-4">
+        <span class="text-[10px] font-mono text-slate-400 block">TICKET ID</span>
+        <span id="success-ticket-id" class="text-sm font-mono font-black text-red-600">TUK-IAC-2026-0000</span>
+      </div>
+      <button onclick="closeSuccessModal()" class="w-full py-2 border-2 border-black bg-black text-white text-xs font-black">
+        확인
+      </button>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 컨테이너 -->
+  <div id="toast-container"></div>
+
+  <!-- 스크립트 로드 -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    function quickSearch(keyword) {
+      const searchInput = document.getElementById("search-input");
+      if (searchInput) {
+        searchInput.value = keyword;
+        searchInput.dispatchEvent(new Event("input"));
+        document.getElementById("research-section").scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  </script>
+
+</body>
+</html>
